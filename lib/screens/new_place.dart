@@ -1,13 +1,16 @@
+import 'package:favorite_places_app/models/place.dart';
+import 'package:favorite_places_app/providers/places_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class NewPlaceScreen extends StatefulWidget {
+class NewPlaceScreen extends ConsumerStatefulWidget {
   const NewPlaceScreen({super.key});
 
   @override
-  State<NewPlaceScreen> createState() => _NewPlaceScreenState();
+  ConsumerState<NewPlaceScreen> createState() => _NewPlaceScreenState();
 }
 
-class _NewPlaceScreenState extends State<NewPlaceScreen> {
+class _NewPlaceScreenState extends ConsumerState<NewPlaceScreen> {
   final _titleController = TextEditingController();
 
   @override
@@ -36,7 +39,14 @@ class _NewPlaceScreenState extends State<NewPlaceScreen> {
             ),
             const SizedBox(height: 8),
             TextButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                ref.read(placesProvider.notifier).addPlace(
+                      Place(
+                        title: _titleController.text,
+                      ),
+                    );
+                Navigator.pop(context);
+              },
               label: const Text('Add Place'),
               icon: const Icon(Icons.add),
             )
