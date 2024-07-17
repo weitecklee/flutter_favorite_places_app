@@ -1,5 +1,6 @@
 import 'package:favorite_places_app/providers/places_provider.dart';
-import 'package:favorite_places_app/screens/new_place.dart';
+import 'package:favorite_places_app/screens/add_place.dart';
+import 'package:favorite_places_app/widgets/places_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -10,25 +11,6 @@ class PlacesScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final places = ref.watch(placesProvider);
 
-    Widget body = Center(
-      child: Text(
-        'No places added yet',
-        style: Theme.of(context).textTheme.titleSmall,
-      ),
-    );
-
-    if (places.isNotEmpty) {
-      body = ListView.builder(
-        itemCount: places.length,
-        itemBuilder: (context, i) => ListTile(
-          title: Text(
-            places[i].title,
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-        ),
-      );
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Places'),
@@ -37,7 +19,7 @@ class PlacesScreen extends ConsumerWidget {
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (ctx) => const NewPlaceScreen(),
+                  builder: (ctx) => const AddPlaceScreen(),
                 ),
               );
             },
@@ -45,7 +27,7 @@ class PlacesScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: body,
+      body: PlacesList(places: places),
     );
   }
 }
