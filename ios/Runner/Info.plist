@@ -46,10 +46,12 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
   <key>NSPhotoLibraryUsageDescription</key>
-  <string>This app needs permission to access your photo library.</string>
+  <string>Pick an image of your place.</string>
   <key>NSCameraUsageDescription</key>
-  <string>This app needs permission to access your device camera.</string>
+  <string>Take a picture of your place.</string>
   <key>NSMicrophoneUsageDescription</key>
-  <string>This app needs permission to access your device microphone.</string>
+  <string>Record audio of your place.</string>
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>Save the location of your place.</string>
 </dict>
 </plist>
