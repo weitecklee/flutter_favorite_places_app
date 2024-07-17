@@ -24,11 +24,9 @@ class _AddPlaceScreenState extends ConsumerState<AddPlaceScreen> {
         _selectedImage != null ||
         _selectedLocation == null) {
       ref.read(placesProvider.notifier).addPlace(
-            Place(
-              title: _titleController.text,
-              image: _selectedImage!,
-              location: _selectedLocation!,
-            ),
+            _titleController.text,
+            _selectedImage!,
+            _selectedLocation!,
           );
       Navigator.pop(context);
     } else {
