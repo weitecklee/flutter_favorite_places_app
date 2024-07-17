@@ -48,8 +48,17 @@ class PlacesNotifier extends StateNotifier<List<Place>> {
     ];
   }
 
-  void removePlace(Place place) {
-    state = state.where((plc) => plc.id != place.id).toList();
+  Future<void> removePlace(Place place) async {
+    try {
+      final db = await _getDatabase();
+      await db.delete('places', where: 'id = ?', whereArgs: [place.id]);
+      await place.image.delete();
+      state.remove(place);
+    } catch (e) {
+      print('Error removing place: $e');
+      rethrow;
+    }
+    state = [...state];
   }
 
   Future<void> loadPlaces() async {

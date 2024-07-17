@@ -23,6 +23,7 @@ class _PlacesScreenState extends ConsumerState<PlacesScreen> {
   @override
   Widget build(BuildContext context) {
     final places = ref.watch(placesProvider);
+    final messenger = ScaffoldMessenger.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -49,7 +50,10 @@ class _PlacesScreenState extends ConsumerState<PlacesScreen> {
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
-                  : PlacesList(places: places),
+                  : PlacesList(
+                      places: places,
+                      messenger: messenger,
+                    ),
         ),
       ),
     );
