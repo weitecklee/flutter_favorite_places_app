@@ -3,6 +3,9 @@
         android:label="favorite_places_app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+            <!-- Enter your own Google Maps API Key below. -->
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="YOUR-API-KEY"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
