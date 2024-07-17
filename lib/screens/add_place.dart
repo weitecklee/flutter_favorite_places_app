@@ -14,6 +14,24 @@ class _AddPlaceScreenState extends ConsumerState<AddPlaceScreen> {
   final _titleController = TextEditingController();
   bool _validate() => _titleController.text.trim().isNotEmpty;
 
+  void _savePlace() {
+    if (_validate()) {
+      ref.read(placesProvider.notifier).addPlace(
+            Place(
+              title: _titleController.text,
+            ),
+          );
+      Navigator.pop(context);
+    } else {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please enter a valid title.'),
+        ),
+      );
+    }
+  }
+
   @override
   void dispose() {
     _titleController.dispose();
@@ -42,23 +60,7 @@ class _AddPlaceScreenState extends ConsumerState<AddPlaceScreen> {
             ),
             const SizedBox(height: 16),
             ElevatedButton.icon(
-              onPressed: () {
-                if (_validate()) {
-                  ref.read(placesProvider.notifier).addPlace(
-                        Place(
-                          title: _titleController.text,
-                        ),
-                      );
-                  Navigator.pop(context);
-                } else {
-                  ScaffoldMessenger.of(context).clearSnackBars();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Please enter a valid title.'),
-                    ),
-                  );
-                }
-              },
+              onPressed: _savePlace,
               label: const Text('Add Place'),
               icon: const Icon(Icons.add),
             ),
