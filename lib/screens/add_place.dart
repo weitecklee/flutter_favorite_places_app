@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:favorite_places_app/models/place.dart';
 import 'package:favorite_places_app/providers/places_provider.dart';
 import 'package:favorite_places_app/widgets/image_input.dart';
@@ -13,13 +15,17 @@ class AddPlaceScreen extends ConsumerStatefulWidget {
 
 class _AddPlaceScreenState extends ConsumerState<AddPlaceScreen> {
   final _titleController = TextEditingController();
-  bool _validate() => _titleController.text.trim().isNotEmpty;
+  File? _selectedImage;
+
+  bool _validate() =>
+      _titleController.text.trim().isNotEmpty || _selectedImage != null;
 
   void _savePlace() {
     if (_validate()) {
       ref.read(placesProvider.notifier).addPlace(
             Place(
               title: _titleController.text,
+              image: _selectedImage!,
             ),
           );
       Navigator.pop(context);
@@ -27,7 +33,7 @@ class _AddPlaceScreenState extends ConsumerState<AddPlaceScreen> {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Please enter a valid title.'),
+          content: Text('Please enter a valid title and image.'),
         ),
       );
     }
@@ -60,7 +66,11 @@ class _AddPlaceScreenState extends ConsumerState<AddPlaceScreen> {
                   .copyWith(color: Theme.of(context).colorScheme.onSurface),
             ),
             const SizedBox(height: 10),
-            const ImageInput(),
+            ImageInput(
+              onPickImage: (image) {
+                _selectedImage = image;
+              },
+            ),
             const SizedBox(height: 16),
             ElevatedButton.icon(
               onPressed: _savePlace,
